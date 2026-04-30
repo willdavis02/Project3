@@ -2,6 +2,12 @@ package todolist;
 
 import java.time.LocalDate;
 
+/**
+ * Author Will Davis, this is an abstract class that has attributes for 
+ * an object of Task, such as title, description, completed, dueDate, and
+ * priority. The constructor creates an object of task, and it provides
+ * abstract methods for the children classes to implement
+ */
 public abstract class Task {
 	private String title;
 	private String description;
