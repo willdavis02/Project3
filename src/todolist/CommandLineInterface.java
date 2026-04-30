@@ -27,26 +27,39 @@ public class CommandLineInterface {
 		System.out.println("Enter your name:");
 		String name= scn.nextLine();
 		System.out.println("Welcome to the To-Do List Manager, "+name+"!");
-		System.out.println("To begin, enter a number to select the task");
-		System.out.println("");
 		printMenu();
-		
+		System.out.println("To begin, enter a number to select the task");
 		int choice = scn.nextInt();
 		while(choice!=10) {
 			switch(choice) {
 				case 1:
+					System.out.println("You have chosen to add a task.");
 					
 					break;
 				
 				case 2:
+					System.out.println("===Task View===");
 					
+					System.out.println(tm.displayAllTasks());
 					break;
 				
 				case 3:
-					
+					System.out.println("Enter the number of the task you'd like to mark complete: ");
+					while(!scn.hasNextInt()) {
+						scn.next();
+						System.out.println("Please enter an integer input: ");
+					}
+					int complete= scn.nextInt();
+					tm.markComplete(complete);
 					break;
 				case 4:
-					
+					System.out.println("Enter the number of the task you want to remove: ");
+					while(!scn.hasNextInt()) {
+						scn.next();
+						System.out.println("Please enter an integer input: ");
+					}
+					int delete = scn.nextInt();
+					tm.removeTask(delete);
 					break;
 				case 5:
 					break;
