@@ -3,7 +3,14 @@ package todolist;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
+/**
+ * Author Will Davis, This class is an implementation of ArrayList data structure. Almost
+ * everything in this class was included in the lecture implementation, aside from the method
+ * overload of remove and taking out comparable, since that isn't necessary for this implementation.
+ * This allows for generic objects(in this case Task objects) to be stored and accessed. 
+ * It has common ArrayList data structure features and methods such as: add, remove, get, set, and size.
+ * @param <T> -generic data type
+ */
 public class MyArrayList<T> implements Iterable<T> {
 	private T[] elements;
 	private int size = 0; 
@@ -12,7 +19,7 @@ public class MyArrayList<T> implements Iterable<T> {
 	
 	@SuppressWarnings("unchecked")
 	public MyArrayList() {
-		elements = (T[])new Comparable[DEFAULT_CAPACITY];
+		elements = (T[])new Object[DEFAULT_CAPACITY];
 		
 	}
 	private void doubleCapacity() {
