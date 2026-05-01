@@ -10,18 +10,38 @@ import java.time.LocalDate;
  */
 public class PriorityTask extends Task implements Prioritizable {
 	
+	/**
+	 * Constructor, doesn't require passing any more parameters, no unique attributes in this
+	 * class, so it just calls the constructor from parent class
+	 * @param title
+	 * @param description
+	 * @param completed
+	 * @param dueDate
+	 * @param priority
+	 */
 	public PriorityTask(String title, String description, boolean completed, LocalDate dueDate, int priority) {
 		super(title, description, completed, dueDate, priority);
 	}
+	/**
+	 * From interface Prioritizable, simply allows for modifying priority level
+	 */
 	public void setPriority(int priority) {
 		this.priority= priority;
 	}
-
+	/**
+	 * Abstract method from Task, returns type of task, in this case it is a Priority Task
+	 */
+	@Override
 	public String getTaskType() {
 		return "Priority";
 	}
+	/**
+	 * Abstract method from Task, returns additional information, in this case
+	 * the Priority level
+	 */
+	@Override
 	public String getDetails() {
-		return "Priority Type: "+getPriority();
+		return "Priority Level: "+getPriority();
 	}
 
 

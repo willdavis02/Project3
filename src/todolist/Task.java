@@ -15,6 +15,15 @@ public abstract class Task {
 	private LocalDate dueDate;
 	protected int priority;
 	
+	/**
+	 * Constructor, takes in all the attributes needed to make an object of task (although task is an abstract class, so an object can't be created,
+	 * only the child classes can. They will call this constructor).
+	 * @param title - name of task
+	 * @param description - explanation of task
+	 * @param completed - whether task is complete or not.
+	 * @param dueDate - LocalDate of when the task needs to be completed
+	 * @param priority- level of need to complete
+	 */
 	public Task(String title, String description, boolean completed, LocalDate dueDate, int priority) {
 		this.title= title;
 		this.description= description;
@@ -22,15 +31,31 @@ public abstract class Task {
 		this.dueDate= dueDate;
 		this.priority= priority;
 	}
+	/**
+	 * Marks a task as complete.
+	 */
 	public void markComplete() {
 		completed = true;
 	}
+	/**
+	 * Format for the way task information is printed. Additional details are called from getDetails method
+	 */
 	public String toString() {
 		return "Title: "+title+"| Description: "+description+"| Completed: "+completed+"| Due Date: "+dueDate+ "| Priority: "+priority+"|Task Type: "+getTaskType()+"|"+ getDetails();
 	}
+	/**
+	 * Abstract methods that are defined in each class. Provide type of task, and any additional
+	 * information unique to that task type.
+	 * @return
+	 */
 	public abstract String getTaskType();
 	public abstract String getDetails();
 	
+	
+	/**
+	 * Getters for all classes
+	 * @return
+	 */
 	public String getTitle() {
 		return title;
 	}
