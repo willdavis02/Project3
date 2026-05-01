@@ -1,4 +1,10 @@
 package todolist;
+
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
 /**
  * Author Will Davis and Maksym Nikulin, this class has many functionalities, all relating to
  * handling the bookkeeping for the Command-Line interface. When called in the CLI, 
@@ -7,38 +13,41 @@ package todolist;
  */
 public class TaskManager {
 	private MyArrayList<Task> tasks = new MyArrayList<>();
-	
+	private Stack<UndoLastAction> undoStack = new Stack<>();
+	private Queue<Task> todaysTasks = new LinkedList<>();
 	/**
-	 * Will Davis. this method simply adds an object of task to the MyArrayList tasks, and returns
+	 * !!!!!!!!Will Davis. this method simply adds an object of task to the MyArrayList tasks, and returns
 	 * true once it is completed.
 	 * @param task - object of task being added
 	 * @return- boolean true, always. Since you can always add a new task
 	 */
 	public boolean addTask(Task task) {
 		tasks.add(task);
+		undoStack.push(new UndoLastAction("Add", task, tasks.size()-1));
+		
 		return true;
 	}
 	/**
-	 * Author Will Davis, this takes the index of the task the user wants to remove, and
+	 * !!!!!!!!!!Author Will Davis, this takes the index of the task the user wants to remove, and
 	 * simply removes the task at that index in the arrayList (MyArrayList handles edge cases)
 	 * @param index- input from user, when called from commandLineInterface
 	 */
 	public void removeTask(int index) {
+		if(index < 0 || index >= tasks.size()) {
+			System.out.println("Select a valid tasks number");
+			return;
+		}
+		
+		Task removeTask = tasks.get(index);
 		tasks.remove(index);
+		undoStack.push(new UndoLastAction("Remove", removeTask, index));
+		
 	}
 	
-	//MAKSYM CHECK THIS METHOD, I THOUGHT IT MIGHT BE USEFUL FOR YOUR STACK IMPLEMENTATION)
-	/**
-	 * Will Davis, possible use for stack implementation, takes in an object of Task rather than the index, and removes it)
-	 * 
-	 * @param task
-	 */
-	public void removeTask(Task task) {
-		tasks.remove(task);
-	}
+
 	
 	/**
-	 * Will Davis, this method takes in an input, and marks the completed item at that index
+	 * !!!!!!!!Will Davis, this method takes in an input, and marks the completed item at that index
 	 * complete. Gives error if the index isn't in the range, or if the task is completed.
 	 * @param index - user input from CLI prompt
 	 */
@@ -57,6 +66,9 @@ public class TaskManager {
 		else {
 			tasks.get(index).markComplete();
 		}
+		
+		tasks.get(index).markComplete();
+		undoStack.push(new UndoLastAction("Complete", tasks.get(index), index));
 	}
 	/**
 	 * Will Davis, this method called in CLI to display the tasks
@@ -120,6 +132,40 @@ public class TaskManager {
 	 */
 	public int getSize() {
 		return tasks.size();
+	}
+	
+	
+	public void undoLastAction() {
+		if(undoStack.isEmpty()) {
+			System.out.println("There are no tasks do Display");
+			return;
+		}
+		
+		UndoLastAction lastAction = undoStack.pop();
+		
+		if(lastAction.getWhatAction().equals("Add")) {
+			tasks.remove(lastAction.getTask());
+			System.out.println("Added tasks was removed.");
+			
+		}else if(lastAction.getWhatAction().equals("Remove")) {
+			tasks.add(lastAction.getTask());
+			System.out.println("Removed task was added back to your list.");
+			
+		}else if(lastAction.getWhatAction().equals("Complete")) {
+			lastAction.getTask().markIncomplete();
+			System.out.println("Completed task is now marcked Incomplete");
+		}
+	}
+	
+	public void showTodayTask() {
+		todaysTasks.clear();
+		
+		for (Task i : tasks) {
+			if (i instanceof RecurringTask)
+				todaysTasks.add(i);
+		}
+		
+		System.out.println("Today's tasks are loaded into the queue");
 	}
 	
 }

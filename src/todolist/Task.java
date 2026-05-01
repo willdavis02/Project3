@@ -44,6 +44,10 @@ public abstract class Task {
 	public String toString() {
 		return "Title: "+title+"| Description: "+description+"| Completed: "+completed+"| Due Date: "+dueDate+ "| Priority: "+priority+"|Task Type: "+getTaskType()+"|"+ getDetails();
 	}
+	
+	public void markIncomplete() {
+		completed = false;
+	}
 	/**
 	 * Abstract methods that are defined in each class. Provide type of task, and any additional
 	 * information unique to that task type.

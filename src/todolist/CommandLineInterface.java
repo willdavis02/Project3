@@ -194,6 +194,7 @@ public class CommandLineInterface {
 					
 					
 				case 5:
+					tm.undoLastAction();
 					break;
 				case 6:
 					break;
