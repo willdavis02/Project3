@@ -197,13 +197,102 @@ public class CommandLineInterface {
 					tm.undoLastAction();
 					break;
 				case 6:
+					tm.showTodayTask();
 					break;
 				case 7:
+					tm.viewTaskQueue();
 					break;
 				case 8:
+					Task nextTask = tm.proccesTodaysTask();
+					
+					if(nextTask != null) {
+						System.out.println("Would you like to mark this task as compelte?");
+						System.out.println("1. Yes");
+						System.out.println("2. No");
+						
+						int markChoice = getValidInt(1,2);
+						if(markChoice == 1) {
+							nextTask.markComplete();
+							System.out.println("Task is Completed");
+						}
+					}
 					break;
 				case 9:
+					System.out.println("How do you want to filter your task?");
+					System.out.println("1. Completion Status");
+					System.out.println("2. Task Type");
+					System.out.println("3. Priority");
+					
+					int filterChoice = getValidInt(1,3);
+					
+					if(filterChoice == 1) {
+						System.out.println("By which parameter do You want to filter?");
+						System.out.println("1. Completed");
+						System.out.println("2. Incomplete");
+						
+						int statusChoice = getValidInt(1,2);
+						boolean choiceCompleted = false;
+						
+						if(statusChoice == 1) {
+							choiceCompleted = true;
+						}
+						
+						MyArrayList<Task> filtered = tm.filterByCompletion(choiceCompleted);
+						
+						if(filtered.size()==0) {
+							System.out.println("No tasks found.");
+						}else {
+							for(Task t : filtered) {
+								System.out.println(t);
+							}
+						}
+						
+					}else if(filterChoice == 2) {
+						System.out.println("By which parameter do You want to filter?");
+						System.out.println("1. Simple");
+						System.out.println("2. Prioriy");
+						System.out.println("3. Recurring");
+						
+						int typeChoice = getValidInt(1,3);
+						String type = "";
+
+						if(typeChoice == 1) {
+							type = "Simple";
+						}
+						else if(typeChoice == 2) {
+							type = "Priority";
+						}
+						else {
+							type = "Recurring";
+						}
+						
+						MyArrayList<Task> filtered = tm.filterByType(type);
+
+						if(filtered.size() == 0) {
+							System.out.println("No tasks found.");
+						} else {
+							for(Task t : filtered) {
+								System.out.println(t);
+							}
+						}
+						
+					}else if(filterChoice == 3) {
+						System.out.println("Enter priority level 1-5:");
+						int choicePriority = getValidInt(1,5);
+
+						MyArrayList<Task> filtered = tm.filterByPriority(choicePriority);
+
+						if(filtered.size() == 0) {
+							System.out.println("No tasks found.");
+						} else {
+							for(Task t : filtered) {
+								System.out.println(t);
+							}
+						}
+					}	
+					
 					break;
+					
 				default:
 					System.out.println("Invalid choice. Please try again.");
 					break;

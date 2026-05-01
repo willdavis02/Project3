@@ -16,8 +16,9 @@ public class TaskManager {
 	private Stack<UndoLastAction> undoStack = new Stack<>();
 	private Queue<Task> todaysTasks = new LinkedList<>();
 	/**
-	 * !!!!!!!!Will Davis. this method simply adds an object of task to the MyArrayList tasks, and returns
+	 * Will Davis. this method simply adds an object of task to the MyArrayList tasks, and returns
 	 * true once it is completed.
+	 * Maksym Nikulin. Added the undoStack to be able to undo the addTask action.
 	 * @param task - object of task being added
 	 * @return- boolean true, always. Since you can always add a new task
 	 */
@@ -28,9 +29,11 @@ public class TaskManager {
 		return true;
 	}
 	/**
-	 * !!!!!!!!!!Author Will Davis, this takes the index of the task the user wants to remove, and
+	 * Author Will Davis, this takes the index of the task the user wants to remove, and
 	 * simply removes the task at that index in the arrayList (MyArrayList handles edge cases)
+	 * Maksym Nikulin. Added the undoStackto undo the removeTask action.
 	 * @param index- input from user, when called from commandLineInterface
+	 * 
 	 */
 	public void removeTask(int index) {
 		if(index < 0 || index >= tasks.size()) {
@@ -47,8 +50,9 @@ public class TaskManager {
 
 	
 	/**
-	 * !!!!!!!!Will Davis, this method takes in an input, and marks the completed item at that index
+	 * Will Davis, this method takes in an input, and marks the completed item at that index
 	 * complete. Gives error if the index isn't in the range, or if the task is completed.
+	 * Maksym Nikulin. Added the undoStack to reverse the last complete action.
 	 * @param index - user input from CLI prompt
 	 */
 	public void markComplete(int index) {
@@ -135,9 +139,13 @@ public class TaskManager {
 	}
 	
 	
+	/**
+	 * Maksym Nikulin. This method works with UndoLastAction class to identify what last 
+	 * action was and reverse it. It will also print out the completion of the command.
+	 */
 	public void undoLastAction() {
 		if(undoStack.isEmpty()) {
-			System.out.println("There are no tasks do Display");
+			System.out.println("There are no actions that can be undone");
 			return;
 		}
 		
@@ -157,6 +165,11 @@ public class TaskManager {
 		}
 	}
 	
+	
+	/**
+	 * Maksym Nikulin. This Method clears the todaysTasks queue and iterates through the task list
+	 * to find Recurring tasks. If the task is recurring, it will add it to the Today's tasks queue.
+	 */
 	public void showTodayTask() {
 		todaysTasks.clear();
 		
@@ -165,7 +178,33 @@ public class TaskManager {
 				todaysTasks.add(i);
 		}
 		
-		System.out.println("Today's tasks are loaded into the queue");
+		System.out.println("Today's tasks are loaded into the queue.");
+	}
+	
+	public void viewTaskQueue() {
+		if(todaysTasks.isEmpty()) {
+			System.out.println("The task queue is empty.");
+			return;
+		}
+		
+		System.out.println("----- Today's Tasks -----");
+		
+		int counter = 1;
+		for(Task i : todaysTasks) {
+			System.out.println(counter + ". " + i);
+			counter++;
+		}
+	}
+	
+	public Task proccesTodaysTask() {
+		if(todaysTasks.isEmpty()) {
+			System.out.println("There are no tasks in Today's queue");
+			return null;
+		}
+		
+		Task nextTask = todaysTasks.poll();
+		System.out.println("Proccessing next Task: " + nextTask);
+		return nextTask;
 	}
 	
 }
