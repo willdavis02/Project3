@@ -13,6 +13,7 @@ public abstract class Task {
 	private String description;
 	private boolean completed;
 	private LocalDate dueDate;
+	//protected because setter is created in PriorityTask, since that is the only one that should be able to change priority
 	protected int priority;
 	
 	/**

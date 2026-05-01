@@ -6,7 +6,7 @@ package todolist;
  * mark them as complete, display them, and filter them by different qualities.
  */
 public class TaskManager {
-	MyArrayList<Task> tasks = new MyArrayList<>();
+	private MyArrayList<Task> tasks = new MyArrayList<>();
 	
 	/**
 	 * Will Davis. this method simply adds an object of task to the MyArrayList tasks, and returns
@@ -113,6 +113,13 @@ public class TaskManager {
 			}
 		}
 		return prioritystatus;
+	}
+	/** 
+	 * Will Davis, getter for size so that it doesn't have to be accessed elsewhere in CLI
+	 * @return
+	 */
+	public int getSize() {
+		return tasks.size();
 	}
 	
 }
