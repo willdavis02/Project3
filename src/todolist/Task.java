@@ -45,6 +45,9 @@ public abstract class Task {
 		return "Title: "+title+"| Description: "+description+"| Completed: "+completed+"| Due Date: "+dueDate+ "| Priority: "+priority+"|Task Type: "+getTaskType()+"|"+ getDetails();
 	}
 	
+	/**
+	 * Marks a task as incomplete
+	 */
 	public void markIncomplete() {
 		completed = false;
 	}

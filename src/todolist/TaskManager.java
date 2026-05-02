@@ -153,7 +153,7 @@ public class TaskManager {
 		
 		if(lastAction.getWhatAction().equals("Add")) {
 			tasks.remove(lastAction.getTask());
-			System.out.println("Added tasks was removed.");
+			System.out.println("Added task was removed.");
 			
 		}else if(lastAction.getWhatAction().equals("Remove")) {
 			tasks.add(lastAction.getTask());
@@ -181,6 +181,11 @@ public class TaskManager {
 		System.out.println("Today's tasks are loaded into the queue.");
 	}
 	
+	
+	/**
+	 * Maksym Nikulin
+	 * This method goes through the taskQueue and displays the contents of it.
+	 */
 	public void viewTaskQueue() {
 		if(todaysTasks.isEmpty()) {
 			System.out.println("The task queue is empty.");
@@ -196,6 +201,14 @@ public class TaskManager {
 		}
 	}
 	
+	
+	/**
+	 * Maksym Nikulin
+	 * This method is used to process today's tasks. It follows FIFO order and removes 
+	 * tasks at the beginning of the queue. It prints the task, and returns it,
+	 * so we can perform actions on it.
+	 * @return Current Task
+	 */
 	public Task proccesTodaysTask() {
 		if(todaysTasks.isEmpty()) {
 			System.out.println("There are no tasks in Today's queue");

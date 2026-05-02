@@ -192,40 +192,48 @@ public class CommandLineInterface {
 					tm.removeTask(delete-1);
 					break;
 					
-					
+				//Undo last action
 				case 5:
-					tm.undoLastAction();
+					tm.undoLastAction(); //calls undo last action from the task manager
 					break;
-				case 6:
-					tm.showTodayTask();
-					break;
-				case 7:
-					tm.viewTaskQueue();
-					break;
-				case 8:
-					Task nextTask = tm.proccesTodaysTask();
 					
-					if(nextTask != null) {
+				//Loads today's tasks into the queue
+				case 6:
+					tm.showTodayTask(); //calls showtodaytask from the task manager
+					break;
+					
+				//Shows today's tasks from the queue
+				case 7:
+					tm.viewTaskQueue(); //calls viewTaskQueue from the task manager
+					break;
+					
+				//This case goes through each task in the queue and either completes them or not. 
+				case 8:
+					Task nextTask = tm.proccesTodaysTask(); //Create new object of Task.
+					
+					if(nextTask != null) { //Check if there is a task
 						System.out.println("Would you like to mark this task as compelte?");
 						System.out.println("1. Yes");
 						System.out.println("2. No");
 						
-						int markChoice = getValidInt(1,2);
+						int markChoice = getValidInt(1,2); //Create int variable to store choices
 						if(markChoice == 1) {
 							nextTask.markComplete();
 							System.out.println("Task is Completed");
 						}
 					}
 					break;
+					
+				//Filters tasks by Completion status/Task Type/ Priority
 				case 9:
 					System.out.println("How do you want to filter your task?");
 					System.out.println("1. Completion Status");
 					System.out.println("2. Task Type");
 					System.out.println("3. Priority");
 					
-					int filterChoice = getValidInt(1,3);
+					int filterChoice = getValidInt(1,3); //Int variable to store choices from 1 to 3
 					
-					if(filterChoice == 1) {
+					if(filterChoice == 1) { //if we filter by completion status, ask user if he want completeor incomplete task
 						System.out.println("By which parameter do You want to filter?");
 						System.out.println("1. Completed");
 						System.out.println("2. Incomplete");
@@ -239,7 +247,8 @@ public class CommandLineInterface {
 						
 						MyArrayList<Task> filtered = tm.filterByCompletion(choiceCompleted);
 						
-						if(filtered.size()==0) {
+						
+						if(filtered.size()==0) {//Check if there are nay task in that group
 							System.out.println("No tasks found.");
 						}else {
 							for(Task t : filtered) {
@@ -247,14 +256,14 @@ public class CommandLineInterface {
 							}
 						}
 						
-					}else if(filterChoice == 2) {
+					}else if(filterChoice == 2) { //Filtering by task Type
 						System.out.println("By which parameter do You want to filter?");
 						System.out.println("1. Simple");
 						System.out.println("2. Prioriy");
 						System.out.println("3. Recurring");
 						
 						int typeChoice = getValidInt(1,3);
-						String type = "";
+						String type = ""; //Create a String that can be reused to output task type
 
 						if(typeChoice == 1) {
 							type = "Simple";
@@ -266,9 +275,9 @@ public class CommandLineInterface {
 							type = "Recurring";
 						}
 						
-						MyArrayList<Task> filtered = tm.filterByType(type);
+						MyArrayList<Task> filtered = tm.filterByType(type); //Create new ArrayList with filtered items
 
-						if(filtered.size() == 0) {
+						if(filtered.size() == 0) { //Check if there is anything in that ArrayLsit
 							System.out.println("No tasks found.");
 						} else {
 							for(Task t : filtered) {
@@ -276,16 +285,16 @@ public class CommandLineInterface {
 							}
 						}
 						
-					}else if(filterChoice == 3) {
+					}else if(filterChoice == 3) { //Filtering by priority
 						System.out.println("Enter priority level 1-5:");
-						int choicePriority = getValidInt(1,5);
+						int choicePriority = getValidInt(1,5); //Filter depending on which priority level user want to see
 
 						MyArrayList<Task> filtered = tm.filterByPriority(choicePriority);
 
 						if(filtered.size() == 0) {
 							System.out.println("No tasks found.");
 						} else {
-							for(Task t : filtered) {
+							for(Task t : filtered) { //iterate through the list and print tasks
 								System.out.println(t);
 							}
 						}
